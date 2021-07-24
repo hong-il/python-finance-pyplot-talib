@@ -20,10 +20,10 @@ df = pa.DataReader("066570.KS", "yahoo", start, end)
 
 p_start = time.time()
 # 볼린저 밴드 직접 연산
-df['p_MA'] = df['Adj Close'].rolling(window=20).mean()
-df['p_STD'] = df['Adj Close'].rolling(window=20).std()
-df['p_bb_UPPER'] = df['p_MA'] + (df['p_STD'] * 1.5)
-df['p_bb_LOWER'] = df['p_MA'] - (df['p_STD'] * 1.5)
+df['p_MA'] = df['Close'].rolling(window=20).mean()
+df['p_STD'] = df['Close'].rolling(window=20).std()
+df['p_bb_UPPER'] = df['p_MA'] + (df['p_STD'] * 2)
+df['p_bb_LOWER'] = df['p_MA'] - (df['p_STD'] * 2)
 print(f"Pandas 시간 측정 : {time.time() - p_start}")
 # 그래프 사이즈
 plt.figure(figsize=(12.5, 5))
@@ -39,7 +39,7 @@ plt.show()
 
 t_start = time.time()
 # ta-lib 연산
-df['t_bb_UPPER'], df['t_MA'], df['t_bb_LOWER'] = ta.BBANDS(df['Adj Close'], 20, 1.5)
+df['t_bb_UPPER'], df['t_MA'], df['t_bb_LOWER'] = ta.BBANDS(df['Adj Close'], 20, 2)
 print(f"TA-LIB 시간 측정 : {time.time() - t_start}")
 # 그래프 사이즈
 plt.figure(figsize=(12.5, 5))
